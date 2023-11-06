@@ -1,4 +1,4 @@
-package main
+package hangmanlesbg
 
 import (
 	"bufio"
@@ -12,7 +12,7 @@ import (
 var linesRead int // Variable pour suivre le nombre de lignes lues
 
 // readWordsFromFile read words in the words package
-func readWordsFromFile(filename string) ([]string, error) {
+func ReadWordsFromFile(filename string) ([]string, error) {
 	file, err := os.Open(filename)
 	if err != nil {
 		return nil, err
@@ -34,7 +34,7 @@ func readWordsFromFile(filename string) ([]string, error) {
 
 func main() {
 	// Reading words from the "words.txt" file
-	words, err := readWordsFromFile("words.txt")
+	words, err := ReadWordsFromFile("words.txt")
 	if err != nil {
 		fmt.Println("Erreur lors du chargement du fichier")
 		return
@@ -45,19 +45,19 @@ func main() {
 	randomIndex := rand.Intn(len(words))
 	randomWord := words[randomIndex]
 	// Create a hidden word
-	hiddenWord := createHiddenWord(randomWord)
+	hiddenWord := CreateHiddenWord(randomWord)
 	// Combine the random word with the hidden word for display
-	displayWord := mergeWords(randomWord, hiddenWord)
+	displayWord := MergeWords(randomWord, hiddenWord)
 	// Displays the chosen random word with the revealed letters
 	fmt.Printf("Mot aléatoire choisi : %s\n", displayWord)
 	// Count the number of characters
 	fmt.Printf("Nombre de caractères dans le mot d'origine : %d\n", len(randomWord))
 	// Play hangman with 10 attempts
-	playHangman(randomWord, hiddenWord, displayWord, 10)
+	PlayHangman(randomWord, hiddenWord, displayWord, 10)
 }
 
 // createHiddenWord generates a hidden word by showing a random part of the original word's letters.
-func createHiddenWord(word string) string {
+func CreateHiddenWord(word string) string {
 	revealedCount := len(word)/2 - 1
 	hiddenWord := make([]rune, len(word))
 	// Créez un tableau d'indices pour les caractères révélés
@@ -77,7 +77,7 @@ func createHiddenWord(word string) string {
 }
 
 // Merge words character by character
-func mergeWords(randomWord string, hiddenWord string) string {
+func MergeWords(randomWord string, hiddenWord string) string {
 	mergedWord := ""
 	for i := 0; i < len(randomWord); i++ {
 		if hiddenWord[i] == '_' {
@@ -89,7 +89,7 @@ func mergeWords(randomWord string, hiddenWord string) string {
 	return mergedWord
 }
 
-func playHangman(word string, hiddenWord string, displayWord string, maxAttempts int) {
+func PlayHangman(word string, hiddenWord string, displayWord string, maxAttempts int) {
 	guesses := make([]rune, len(word))
 	for i := range guesses {
 		guesses[i] = '_'
@@ -144,7 +144,7 @@ func isLetter(r rune) bool {
 	return (r >= 'a' && r <= 'z') || (r >= 'A' && r <= 'Z')
 }
 
-func printUsedLetters(usedLetters map[rune]bool) {
+func PrintUsedLetters(usedLetters map[rune]bool) {
 	for letter, used := range usedLetters {
 		if used {
 			fmt.Printf("%c ", letter)
