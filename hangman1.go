@@ -100,7 +100,7 @@ func PlayHangman(word string, hiddenWord string, displayWord string, maxAttempts
 		fmt.Printf("Mot caché : %s\n", displayWord)
 		fmt.Printf("Tentatives restantes : %d\n", attempts)
 		fmt.Print("Lettres déjà utilisées : ")
-		printUsedLetters(usedLetters)
+		PrintUsedLetters(usedLetters)
 		var guess string
 		fmt.Print("Devinez une lettre (ou tapez '/' pour quitter) : ")
 		fmt.Scan(&guess)
